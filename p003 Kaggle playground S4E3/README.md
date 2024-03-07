@@ -10,3 +10,6 @@ Below are my works and links to my Kaggle profile:
    - Train dataset is much noisier with extreme outliers.
    - Removing these outliers negatively affect model score, indicating the noise is with pattern / structure that can be learned by model.
    - Combine original and train dataset can slightly improve model score.
+4. [Effect of data balancing on model score](https://www.kaggle.com/code/ustcer1984/steel-plate-data-balance-effect-s4e3)
+   - Original dataset sample size is much lower than train dataset.
+   - Significant model score improvment is observed when upsampling original dataset and combine into train dataset.
