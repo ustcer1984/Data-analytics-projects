@@ -13,3 +13,10 @@ Below are my works and links to my Kaggle profile:
 4. [Effect of data balancing on model score](https://www.kaggle.com/code/ustcer1984/steel-plate-data-balance-effect-s4e3)
    - Original dataset sample size is much lower than train dataset.
    - Significant model score improvment is observed when upsampling original dataset and combine into train dataset.
+5. [Effect of dropping unimportant features](https://www.kaggle.com/code/ustcer1984/steel-plate-drop-unimportant-features-s4e3)
+   - Dropping unimportant features ***helps*** both `LGBM` and `XGB` models.
+   - Best criteria is **1e-4** for both models.
+   - Compare `LGBM' to `XGB` (both with default parameters)
+       - Higher absolute auc score.
+       - Less impact by feature selection.
+       - Overall `LGBM` performance is better than `XGB`.
