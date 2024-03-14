@@ -20,3 +20,8 @@ Below are my works and links to my Kaggle profile:
        - Higher absolute auc score.
        - Less impact by feature selection.
        - Overall `LGBM` performance is better than `XGB`.
+6. [PCA feature auto selection and effect](https://www.kaggle.com/code/ustcer1984/steel-plate-pca-auto-selection-and-effect-s4e3)
+   - Select feature grouping (based on correlation factor) for PCA features generation.
+   - Drop unimportant features based on permutation importance.
+   - Using this method, XGB and LGBM model performance (auc score) **improves by ~ 0.003**.
+   - However, this method shows negative effect when applying to RF model. 
