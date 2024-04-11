@@ -1,0 +1,72 @@
+{
+    "cv": 5,
+    "data_file": "./data/score.db",
+    "save_pickle": true,
+    "save_output": true,
+    "file_prefix": "n1K",
+    "optimize_params": {
+        "n_trials": 1000,
+        "timeout": 7200,
+        "n_jobs": -1,
+        "gc_after_trial": true
+    },
+    "permu_importance_params": {
+        "n_repeats": 5,
+        "n_jobs": -1
+    },
+    "hyper_params": {
+        "n_estimators": [
+            "int",
+            20,
+            500
+        ],
+        "criterion": [
+            "const",
+            "squared_error"
+        ],
+        "max_depth": [
+            "int",
+            5,
+            100
+        ],
+        "min_samples_split": [
+            "float",
+            1e-05,
+            0.01
+        ],
+        "min_samples_leaf": [
+            "float",
+            1e-05,
+            0.01
+        ],
+        "max_features": [
+            "float",
+            0.1,
+            1.0
+        ],
+        "bootstrap": [
+            "categorical",
+            [
+                true,
+                false
+            ]
+        ],
+        "random_state": [
+            "const",
+            314
+        ],
+        "verbose": [
+            "const",
+            0
+        ],
+        "n_jobs": [
+            "const",
+            -1
+        ],
+        "max_samples": [
+            "float",
+            0.1,
+            1.0
+        ]
+    }
+}

@@ -1,0 +1,2 @@
+__verbose__
+__pipe_registry__
