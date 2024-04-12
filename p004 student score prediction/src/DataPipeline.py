@@ -1,7 +1,7 @@
 """ Light data pipeline framework for machine learning.
 
 Author: Zhang Zhou
-Version: 0.24.4.10
+Version: 0.24.4.12
 """
 
 # library and environment setup
@@ -223,18 +223,18 @@ class DataPipeline():
         # save output file
         if save_output == True: # user requests to save pipeline as .pickle file
             if output_file is not None: # user specify file path and name
-                pipe_buff['X'].to_csv(output_file, index=False)
+                pipe_buff['X_transformed'].to_csv(output_file, index=False)
             else: # use default path and file name
                 file_name = ('./output/transform/' + file_prefix + '_' +
                              self.__class__.__name__ + '.csv')
-                pipe_buff['X'].to_csv(file_name, index=False)
+                pipe_buff['X_transformed'].to_csv(file_name, index=False)
 
         # Log print: transform complete
         if self.__verbose__ > 0:
             print(datetime.now())
             print('Pipeline completed.')
 
-        return pipe_buff['X']
+        return pipe_buff['X_transformed']
     
     def predict(self, X=None, y=None, data_file=None, name='main',
                 save_output=False, output_file=None,
@@ -713,6 +713,11 @@ class ScorePipeline(DataPipeline):
         buff['data']['sleep_length'] = buff['data']['wake_time'] - buff['data']['sleep_time']
         num_cols = num_cols + ['class_size', 'male_ratio', 'sleep_length']
 
+        # during permutation importance calculation there may be cases
+        # n_male and n_female are both 0, resulting nan for male_ratio
+        # fill nan with 0.5 in this case
+        buff['data']['male_ratio'] = buff['data']['male_ratio'].fillna(0.5)
+
         # drop 'n_male' and 'n_female' columns
         buff['data'].drop(columns=['n_male', 'n_female'], inplace=True)
         num_cols.remove('n_male')
@@ -948,6 +953,9 @@ class ScorePipeline(DataPipeline):
         else:
             buff['X'] = buff['data']
             buff['y'] = None
+
+        # transform mode output
+        buff['X_transformed'] = buff['X'].copy()
         
         ## Log print: end pipe
         if self.__verbose__ > 0:
@@ -1024,7 +1032,7 @@ class ScorePipeline(DataPipeline):
                         params[parameter] = trial.suggest_float(parameter, x1, x2)
                     case 'categorical':
                         x = hyper_params[parameter][1]
-                        params[parameter] = trial.suggest_float(parameter, x)
+                        params[parameter] = trial.suggest_categorical(parameter, x)
                     case 'const':
                         x = hyper_params[parameter][1]
                         params[parameter] = x
@@ -1111,9 +1119,11 @@ class ScorePipeline(DataPipeline):
             pass # no action in transform mode
         elif pipe_mode == 'predict':
             estimator = self.__pipe_registry__[(kwargs['name'], pipe_id)]['estimator']
+            # if buff['X'].isna().sum().sum() > 0:
+            #     raise Exception('NAN inside X')
             y_pred = estimator.predict(buff['X'])
             # y_pred is array now, convert to Series
-            y_pred = pd.Series(y_pred, index=buff['X'].index, name='final_test')
+            y_pred = pd.Series(y_pred, index=buff['X_transformed'].index, name='final_test')
             buff['y_pred'] = y_pred
         
         ## Log print: end pipe
