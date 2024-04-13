@@ -2,6 +2,11 @@ My study journey on data analytics and machine learning.
 
 Each folder is a different project.
 
+### [Student Score Prediction](https://github.com/ustcer1984/Data-analytics-projects/tree/main/p004%20student%20score%20prediction)  
+- End-to-end machine learning data pipeline
+- Light weight data pipeline framework
+- Detailed data cleaning, EDA, model tuning (Optuna) and model explanation
+
 ### [Steel Plate Defect Prediction](https://github.com/ustcer1984/Data-analytics-projects/tree/main/p003%20Kaggle%20playground%20S4E3)  
 - EDA, models (RF/XGB/LGBM) and explanary, advanced feature engineering
 
